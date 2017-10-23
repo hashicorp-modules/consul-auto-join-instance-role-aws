@@ -1,0 +1,1 @@
+# consul-autojoin-instance-role-aws
