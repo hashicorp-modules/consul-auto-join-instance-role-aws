@@ -4,4 +4,3 @@ module "consul_auto_join_instance_role" {
 
   name = "${var.name}"
 }
-
