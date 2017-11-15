@@ -10,6 +10,7 @@ Creates an IAM Role & Instance Profile with the necessary permission required fo
 
 ## Input Variables
 
+- `provision`: [Optional] Override to prevent provisioning resources in this module, defaults to "true".
 - `name`: [Optional] Name for resources, defaults to "consul-auto-join-instance-role-aws".
 
 ## Outputs
