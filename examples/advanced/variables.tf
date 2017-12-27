@@ -1,1 +1,2 @@
-variable "name" { }
+variable "count" { }
+variable "name"  { }
