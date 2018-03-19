@@ -26,7 +26,7 @@ resource "random_id" "name" {
 resource "aws_iam_role" "consul" {
   count = "${var.count}"
 
-  name               = "${element(random_id.name.*.hex, count.index)}"
+  name_prefix        = "${element(random_id.name.*.hex, count.index)}"
   assume_role_policy = "${element(data.aws_iam_policy_document.assume_role.*.json, count.index)}"
 }
 
@@ -54,14 +54,14 @@ data "aws_iam_policy_document" "consul" {
 resource "aws_iam_role_policy" "consul" {
   count = "${var.count}"
 
-  name   = "SelfAssembly"
-  role   = "${element(aws_iam_role.consul.*.id, count.index)}"
-  policy = "${element(data.aws_iam_policy_document.consul.*.json, count.index)}"
+  name_prefix = "${element(random_id.name.*.hex, count.index)}"
+  role        = "${element(aws_iam_role.consul.*.id, count.index)}"
+  policy      = "${element(data.aws_iam_policy_document.consul.*.json, count.index)}"
 }
 
 resource "aws_iam_instance_profile" "consul" {
   count = "${var.count}"
 
-  name = "${element(random_id.name.*.hex, count.index)}"
-  role = "${element(aws_iam_role.consul.*.name, count.index)}"
+  name_prefix = "${element(random_id.name.*.hex, count.index)}"
+  role        = "${element(aws_iam_role.consul.*.name, count.index)}"
 }
