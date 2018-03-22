@@ -1,2 +1,2 @@
-count = "2"
-name  = "consul-auto-join-instance-role-aws-advanced"
+create = true
+name   = "consul-auto-join-advanced"

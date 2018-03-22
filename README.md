@@ -10,8 +10,8 @@ Creates an IAM Role & Instance Profile with the necessary permission required fo
 
 ## Input Variables
 
-- `count`: [Optional] Module count, defaults to "1".
-- `name`: [Optional] Name for resources, defaults to "consul-auto-join-instance-role-aws".
+- `create`: [Optional] Create Module, defaults to true.
+- `name`: [Optional] Name for resources, defaults to "consul-auto-join-aws".
 
 ## Outputs
 

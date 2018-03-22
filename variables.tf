@@ -1,9 +1,9 @@
-variable "count" {
-  default     = "1"
-  description = "Module count, defaults to \"1\"."
+variable "create" {
+  description = "Create Module, defaults to true."
+  default     = true
 }
 
 variable "name" {
-  default     = "consul-auto-join-instance-role-aws"
   description = "Name for resources, defaults to \"consul-auto-join-instance-role-aws\"."
+  default     = "consul-auto-join-aws"
 }

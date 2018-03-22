@@ -3,7 +3,7 @@ terraform {
 }
 
 data "aws_iam_policy_document" "assume_role" {
-  count = "${var.count}"
+  count = "${var.create ? 1 : 0}"
 
   statement {
     effect  = "Allow"
@@ -16,22 +16,15 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-resource "random_id" "name" {
-  count = "${var.count}"
-
-  byte_length = 4
-  prefix      = "${var.name}-${count.index + 1}-"
-}
-
 resource "aws_iam_role" "consul" {
-  count = "${var.count}"
+  count = "${var.create ? 1 : 0}"
 
-  name_prefix        = "${element(random_id.name.*.hex, count.index)}"
-  assume_role_policy = "${element(data.aws_iam_policy_document.assume_role.*.json, count.index)}"
+  name_prefix        = "${var.name}-"
+  assume_role_policy = "${element(data.aws_iam_policy_document.assume_role.*.json, 0)}"
 }
 
 data "aws_iam_policy_document" "consul" {
-  count = "${var.count}"
+  count = "${var.create ? 1 : 0}"
 
   statement {
     sid       = "AllowSelfAssembly"
@@ -52,16 +45,16 @@ data "aws_iam_policy_document" "consul" {
 }
 
 resource "aws_iam_role_policy" "consul" {
-  count = "${var.count}"
+  count = "${var.create ? 1 : 0}"
 
-  name_prefix = "${element(random_id.name.*.hex, count.index)}"
-  role        = "${element(aws_iam_role.consul.*.id, count.index)}"
-  policy      = "${element(data.aws_iam_policy_document.consul.*.json, count.index)}"
+  name_prefix = "${var.name}-"
+  role        = "${element(aws_iam_role.consul.*.id, 0)}"
+  policy      = "${element(data.aws_iam_policy_document.consul.*.json, 0)}"
 }
 
 resource "aws_iam_instance_profile" "consul" {
-  count = "${var.count}"
+  count = "${var.create ? 1 : 0}"
 
-  name_prefix = "${element(random_id.name.*.hex, count.index)}"
-  role        = "${element(aws_iam_role.consul.*.name, count.index)}"
+  name_prefix = "${var.name}-"
+  role        = "${element(aws_iam_role.consul.*.name, 0)}"
 }
