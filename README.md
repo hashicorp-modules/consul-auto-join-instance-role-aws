@@ -2,6 +2,8 @@
 
 Creates an IAM Role & Instance Profile with the necessary permission required for Consul Auto-Join.
 
+Checkout [examples](./examples) for fully functioning examples.
+
 ## Environment Variables
 
 - `AWS_DEFAULT_REGION`

@@ -1,5 +1,9 @@
 terraform {
-  required_version = ">= 0.9.3"
+  required_version = ">= 0.11.5"
+}
+
+provider "aws" {
+  version = "~> 1.12"
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -20,7 +24,7 @@ resource "aws_iam_role" "consul" {
   count = "${var.create ? 1 : 0}"
 
   name_prefix        = "${var.name}-"
-  assume_role_policy = "${element(data.aws_iam_policy_document.assume_role.*.json, 0)}"
+  assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
 }
 
 data "aws_iam_policy_document" "consul" {
@@ -48,13 +52,13 @@ resource "aws_iam_role_policy" "consul" {
   count = "${var.create ? 1 : 0}"
 
   name_prefix = "${var.name}-"
-  role        = "${element(aws_iam_role.consul.*.id, 0)}"
-  policy      = "${element(data.aws_iam_policy_document.consul.*.json, 0)}"
+  role        = "${aws_iam_role.consul.id}"
+  policy      = "${data.aws_iam_policy_document.consul.json}"
 }
 
 resource "aws_iam_instance_profile" "consul" {
   count = "${var.create ? 1 : 0}"
 
   name_prefix = "${var.name}-"
-  role        = "${element(aws_iam_role.consul.*.name, 0)}"
+  role        = "${aws_iam_role.consul.name}"
 }
