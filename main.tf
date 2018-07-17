@@ -2,10 +2,6 @@ terraform {
   required_version = ">= 0.11.5"
 }
 
-provider "aws" {
-  version = "~> 1.12"
-}
-
 data "aws_iam_policy_document" "assume_role" {
   count = "${var.create ? 1 : 0}"
 
