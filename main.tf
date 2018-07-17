@@ -1,9 +1,5 @@
 terraform {
-  required_version = ">= 0.11.5"
-}
-
-provider "aws" {
-  version = "~> 1.12"
+  required_version = ">= 0.11.6"
 }
 
 data "aws_iam_policy_document" "assume_role" {
